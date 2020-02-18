@@ -25,7 +25,8 @@ int main()
     scanf(" %lf", &dNum);
     //Impresión de los datos
     printf("Your integer %d storage size is %d bytes.\n", iNum, sizeof(iNum));
-    printf("Your char %c storage size is %d bytes. And I can read it as %c or as %d.\n", cChar, sizeof(cChar), cChar, cChar);
+    printf("Your char %c storage size is %d bytes. And I can read it as %c or as %d.\n", 
+    cChar, sizeof(cChar), cChar, cChar);
     printf("Your double %lf storage size is %d bytes, I can read any number from %lf to %lf in this data type \n", 
     dNum, (int)sizeof(dNum), DBL_MIN, DBL_MAX);
 
