@@ -37,10 +37,10 @@ int main()
     P.iEdad = atoi(buf); //Convirtiendo String a Int
     //Imprimiendo al Agente
     printf("%s\n", "Agente: ");
-    printf("%s", A.cNombre);
-    printf("%s", A.cUNombre);
-    printf("%i\n", A.iEdad);
-    printf("%s", A.cGenero);
-    printf("%s", A.cMision);
+    printf("%s", P.cNombre);
+    printf("%s", P.cUNombre);
+    printf("%i\n", P.iEdad);
+    printf("%s", P.cGenero);
+    printf("%s", P.cMision);
 
 }
