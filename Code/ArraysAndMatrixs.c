@@ -14,6 +14,8 @@ int main()
     int iMatOne[2][2];
     int iMatTwo[2][2];
 
+    printf("Dame los valores de la matriz Uno: \n");
+
 
     return 0;
 }
