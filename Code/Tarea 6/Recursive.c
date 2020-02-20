@@ -5,7 +5,7 @@
 
 #include "stdio.h"
 
-//Función recursiva para 
+//Función recursiva para calcular el factorial de un numero
 long int Fact(int iNumber)
 {
     if(iNumber>=1)
