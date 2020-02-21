@@ -5,29 +5,52 @@
 
 
 #include <stdio.h>
+//Funcion usada para cambiar los valores
 
-void changer(char cString[]){
-    char cEnd = '\0';
-    while(*cString != cEnd){
-        if(*cString == 'a')
-            *cString = '4';
-        else if(*cString == 'e')
-            *cString = '3';
-        else if(*cString == 'i')
-            *cString = '1';
-        else if(*cString == 'o')
-            *cString = '0';
-        else if(*cString == 'u')
-            *cString = '2';
-            
-        cString++;
+void swap(char cWord[])
+{
+    char stop = '\0';
+    while(*cWord != stop)
+    {
+
+        if(*cWord == 'o')
+        {
+            *cWord = '0';
+        }
+
+        else if(*cWord == 'i')
+        {
+            *cWord = '1';
+        }
+
+        else if(*cWord == 'u')
+        {
+            *cWord = '2';
+        }
+        
+        else if(*cWord == 'e')
+        {
+            *cWord = '3';
+        }
+
+        else if(*cWord == 'a')
+        {
+            *cWord = '4';
+        }
+
+        cWord++;
     }
 }
 
-int main(){
-    char cString[256];
-    printf("%s \n", "Introduce una palabra: ");
-    scanf("%s", cString);
-    changer(cString);
-    printf("%s \n", cString);
+//Funcion principal
+int main()
+{
+    
+    char cWord[256];
+    printf("%s \n", "Dame una palabra: ");
+    scanf("%s", cWord);
+    swap(cWord);
+    printf("%s \n", cWord);
+
+    return 0;
 }
