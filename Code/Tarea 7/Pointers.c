@@ -45,12 +45,12 @@ void swap(char cWord[])
 //Funcion principal
 int main()
 {
-    
+
     char cWord[256];
     printf("%s \n", "Dame una palabra: ");
     scanf("%s", cWord);
     swap(cWord);
-    printf("%s \n", cWord);
+    printf("La palabra cambiada es: %s \n", cWord);
 
     return 0;
 }
