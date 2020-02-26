@@ -67,7 +67,7 @@ int checkMisiones(char mision[12])
     return 1;
 }
 
-void insert(struct Agent A)
+void add(struct Agent A)
 {
     struct Node *t, *temp;
 
@@ -97,54 +97,54 @@ void insert(struct Agent A)
 }
 
 void traverse(){
-    struct Node *t;
+    struct Node *List;
 
-    t = head;
+    List = head;
 
-    if(t == NULL)
+    if(List == NULL)
     {
-        printf("La Lista esta vacia \n");
+        printf("No hay nadie en la lista \n");
         return;
     }
 
     printf("La lista tiene %d Agentes \n \n", counter);
 
-    while(t->next != NULL)
+    while(List->next != NULL)
     {
-        printf("ID del Agente: %d \n", t->data);
-        printf("\t Nombre del Agente: %s \n" , t->A.cNombre);
-        printf("\t Apellido del Agente: %s\n" , t->A.cUNombre);
-        printf("\t Edad del Agente: %d\n" , t->A.iEdad);
+        printf("ID del Agente: %d \n", List->data);
+        printf("\t Nombre del Agente: %s \n" , List->A.cNombre);
+        printf("\t Apellido del Agente: %s\n" , List->A.cUNombre);
+        printf("\t Edad del Agente: %d\n" , List->A.iEdad);
         for(int i = 0; i < counterActivos; i++)
         {
-            printf("\t Activos del Agente: %s\n" , t->A.cActivos[i]);
+            printf("\t Activos del Agente: %s\n" , List->A.cActivos[i]);
             printf("\n");
         }
 
         for(int i = 0; i < counterMisiones; i++)
         {
-            printf("\t Misiones del Agente: %s\n" , t->A.cMision[i]);
+            printf("\t Misiones del Agente: %s\n" , List->A.cMision[i]);
             printf("\n");
         }
 
-        t = t->next;
+        List = List->next;
         printf("\n-------------------------------------------\n");
     }
 
-    printf("ID del Agente: %d \n", t->data);
-    printf("\t Nombre del Agente: %s \n" , t->A.cNombre);
-    printf("\t Apellido del Agente: %s\n" , t->A.cUNombre);
-    printf("\t Edad del Agente: %d\n" , t->A.iEdad);
+    printf("ID del Agente: %d \n", List->data);
+    printf("\t Nombre del Agente: %s \n" , List->A.cNombre);
+    printf("\t Apellido del Agente: %s\n" , List->A.cUNombre);
+    printf("\t Edad del Agente: %d\n" , List->A.iEdad);
 
     for(int i = 0; i < counterActivos; i++)
     {
-            printf("\t Activos del Agente: %s\n" , t->A.cActivos[i]);
+            printf("\t Activos del Agente: %s\n" , List->A.cActivos[i]);
             printf("\n");
     }
 
     for(int i = 0; i < counterMisiones; i++)
     {
-            printf("\t Misiones del Agente: %s\n" , t->A.cMision[i]);
+            printf("\t Misiones del Agente: %s\n" , List->A.cMision[i]);
             printf("\n");
     }
     printf("\n-------------------------------------------\n");
@@ -269,7 +269,7 @@ int main()
                 }
             }
 
-            insert(P);
+            add(P);
         }
 
         else if(iInput == 2)
