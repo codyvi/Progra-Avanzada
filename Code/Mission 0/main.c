@@ -100,7 +100,7 @@ void add(struct Agent A)
 }
 
 //Función para poder imprimir la lista
-void traverse()
+void display()
 {
     struct Node *List;
 
@@ -179,6 +179,7 @@ void delete(int x)
 
     prev->next = tmp->next; 
     free(tmp);
+    printf("\n Agente eliminado \n");
 }
 
 //funcion principal
@@ -192,7 +193,6 @@ int main()
     char buf[10]; //Variable temporal
     printf("\n-------------------------------------------\n");
     printf("\n------------Bienvenido agente--------------\n");
-    printf("\n-------------------------------------------\n");
 
 
     for(;;)
@@ -246,13 +246,13 @@ int main()
                 {
                     strcpy(P.cActivos[counterActivos], cActivos);
                     counterActivos++;
-                    printf("Activo agregado de manera exitosa \n");
+                    printf("Activo agregado de manera correcta \n");
                     iNumActivos--;
                 } 
                 
                 else 
                 {
-                    printf("Activo no cumple con el formato\n");
+                    printf("Error, Activo no cumple con el formato\n");
                 }
             }
 
@@ -269,13 +269,13 @@ int main()
                 {
                     strcpy(P.cMision[counterMisiones], cMission);
                     counterMisiones++;
-                    printf("Mision agregada de manera exitosa \n");
+                    printf("Mision agregada de manera correcta \n");
                     iNumMisiones--;
                 } 
                 
                 else 
                 {
-                    printf("Mision no cumple con el formato\n");
+                    printf("Error, Mision no cumple con el formato\n");
                 }
             }
 
@@ -285,7 +285,7 @@ int main()
         else if(iInput == 2)
         {
             // printf("\n Opcion dos \n");            
-            traverse();
+            display();
             if(head != NULL)
             {
                 printf("Introduce el ID del elemento a borrar: \n");
@@ -298,7 +298,7 @@ int main()
         else if(iInput == 3)
         {
             // printf("\n Opcion tres \n");
-            traverse();
+            display();
         }
         
         else if(iInput == 4)
