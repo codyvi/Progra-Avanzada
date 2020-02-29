@@ -30,6 +30,8 @@ struct Node *head = NULL;
 int counter = 0;
 int counterActivos = 0;
 int counterMisiones = 0;
+int ArrActivos[13];
+int ArrMisiones[13];
 
 //Funcion para validar los activos 
 int checkActivos(char agente[13])
@@ -67,6 +69,7 @@ int checkMisiones(char mision[12])
     return 1;
 }
 
+//Función añadida para agregar agente a la lista
 void add(struct Agent A)
 {
     struct Node *t, *temp;
@@ -96,7 +99,9 @@ void add(struct Agent A)
     t->next = NULL; 
 }
 
-void traverse(){
+//Función para poder imprimir la lista
+void traverse()
+{
     struct Node *List;
 
     List = head;
@@ -151,34 +156,36 @@ void traverse(){
 
 }
 
+//Función para borrar un agente de la lista
 void delete(int x)
 {
-    struct Node *prev, *temp;
-    temp = head;
+    struct Node *prev, *tmp;
+    tmp = head;
     prev = head;
 
-    if(temp != NULL && temp->data == x)
+    if(tmp != NULL && tmp->data == x)
     {
-        head = temp->next;
-        free(temp);
+        head = tmp->next;
+        free(tmp);
         return;
     }
 
-    while(temp != NULL && temp->data != x)
+    while(tmp != NULL && tmp->data != x)
     {
-        prev = temp; 
-        temp = temp->next; 
+        prev = tmp; 
+        tmp = tmp->next; 
     }
-    if (temp == NULL) return;
+    if (tmp == NULL) return;
 
-    prev->next = temp->next; 
-    free(temp);
+    prev->next = tmp->next; 
+    free(tmp);
 }
 
 //funcion principal
 int main()
 {
     int iInput;
+    int CounterAgentes = 0;
     int iDAta;
     int iNumActivos;
     int iNumMisiones;
@@ -203,6 +210,7 @@ int main()
         if(iInput == 1)
         {
             // printf("\n Opcion uno \n");
+            CounterAgentes++;
             fgets(P.cNombre,30,stdin); //fget para que ignore este, y pase al otro, esto por problemas con scanf
             printf("%s\n", "Introduce el nombre del agente: ");
             fgets(P.cNombre,30,stdin);
@@ -227,6 +235,7 @@ int main()
             printf("Ingresa cuantos activos tiene el agente\n");
             fgets(buf,10,stdin);
             iNumActivos = atoi(buf);
+            ArrActivos[CounterAgentes] = iNumActivos;
             while(iNumActivos > 0)
             {
                 char cActivos[13] = "";
@@ -249,6 +258,7 @@ int main()
 
             printf("Ingresa cuantos misiones tiene el agente\n");
             scanf("%d", &iNumMisiones);
+            ArrMisiones[CounterAgentes] = iNumMisiones;
             // printf("%d",iNumMisiones);
             while(iNumMisiones > 0)
             {
@@ -287,7 +297,7 @@ int main()
 
         else if(iInput == 3)
         {
-            printf("\n Opcion tres \n");
+            // printf("\n Opcion tres \n");
             traverse();
         }
         
