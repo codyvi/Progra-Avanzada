@@ -1,7 +1,7 @@
 //Autor: David Alonso Cantú Martínez
 //Matrícula: A00822455
 //Fecha: 11/03/2020
-//Pregunta al usuario un entero, un char y un double e imprime el tamaño en bits
+//Pregunta al usuario un entero, un char y un double e imprime el tamaño en bits usando Union
 
 #include "stdio.h"
 #include "float.h"
