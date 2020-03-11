@@ -71,6 +71,11 @@ int asciiHEXToInt(char *cHex)
     return iConvertido;
 }
 
+double asciiToDouble(char *cNum)
+{
+
+}
+
 //función principal 
 int main()
 {
@@ -86,8 +91,8 @@ int main()
     int iHexAInt = asciiHEXToInt(cString);
     printf("%i \n", iHexAInt);
 
-
-
+    printf("%s", "Introduce un numero: ");
+    scanf("%s", cString);
 
     return 0;
 }
