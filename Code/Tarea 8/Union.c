@@ -19,20 +19,20 @@ union Valores
 int main()
 {
 
-    union Valores datos;
+    union Valores uDatos;
 
     printf("Enter a int number: ");
-    scanf("%d", &datos.i);
-    printf("Your integer %d storage size is %d bytes.\n", datos.i, sizeof(datos.i));
+    scanf("%d", &uDatos.i);
+    printf("Your integer %d storage size is %d bytes.\n", uDatos.i, sizeof(uDatos.i));
 
     printf("Enter a double: ");
-    scanf("%lf", &datos.d);
+    scanf("%lf", &uDatos.d);
     printf("Your double %lf storage size is %d bytes, I can read any number from %lf to %lf in this data type \n", 
-    datos.d, (int)sizeof(datos.d), DBL_MIN, DBL_MAX);
+    uDatos.d, (int)sizeof(uDatos.d), DBL_MIN, DBL_MAX);
     
     printf("Enter a string: ");
-    scanf("%100s", &datos.str);
-    printf("Your string %s storage size is %d bytes.\n", datos.str, sizeof(datos.str));
+    scanf("%100s", &uDatos.str);
+    printf("Your string %s storage size is %d bytes.\n", uDatos.str, sizeof(uDatos.str));
 
   
     return 0;
