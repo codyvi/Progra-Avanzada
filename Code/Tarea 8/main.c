@@ -1,47 +1,29 @@
+//Autor: David Alonso Cantú Martínez
+//Matrícula: A00822455
+//Fecha: 11/03/2020
+//Pregunta al usuario un entero, un char y un double e imprime el tamaño en bits
 
-#include <stdio.h>
-#include <string.h>
+#include "stdio.h"
+#include "float.h"
+#include "string.h"
 
-struct Agente{
-    char cName[30];
-    char cLastName[30];
-    int iAge;
-    char cGender[12];
-    char cMission[25];
+union Valores
+{
+    int i;
+    double d;
+    char str[100];
 };
 
-union Data{
-    int iInt;
-    double dDouble;
-    char cString[80];
-    struct Agente *A;
-};
 
-void printAgent(union Data D){
-    printf("%s\n", "Agente: ");
-    printf("%s\n", D.A->cName);
-    printf("%s\n", D.A->cLastName);
-    printf("%i\n", D.A->iAge);
-    printf("%s\n", D.A->cGender);
-    printf("%s\n", D.A->cMission);
-}
+//función principal del programa
+int main()
+{
 
-int main(int argc, const char* argv[]){
-    union Data D;
-    printf("%s\n", "Introduce el nombre del agente: ");
-    scanf("%s", D.A->cName);
+    union Valores datos;
 
-    printf("%s\n", "Introduce el apellido del agente: ");
-    scanf("%s", D.A->cLastName);
+    printf("Enter a int number: ");
+    scanf("%d", &datos.i);
+    printf("Your integer %d storage size is %d bytes.\n", datos.i, sizeof(datos.i));
 
-    printf("%s\n", "Introduce la edad del agente: ");
-    scanf("%i", &D.A->iAge);
-
-    printf("%s\n", "Introduce el genero del agente: ");
-    scanf("%s", D.A->cGender);
-
-    printf("%s\n", "Introduce el id de la mision: ");
-    scanf("%s", D.A->cMission);
-
-    printAgent(D);
+    return 0;
 }
