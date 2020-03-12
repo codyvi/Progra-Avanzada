@@ -1,12 +1,12 @@
 //Autor: David Alonso Cantú Martínez
 //Matrícula: A00822455
 //Fecha: 11/03/2020
-//Convierte numeros binarios y hexa a decimal, también un entero le pone precisión
+//Convierte argumentos dados de hexa a int
 
 #include "stdio.h"
 #include "stdlib.h"
 
-
+//funcion que convierte hex a int 
 int asciiHEXToInt(char *cHex)
 {
     char cFinal = '\0';
@@ -54,10 +54,12 @@ int asciiHEXToInt(char *cHex)
     return iConvertido;
 }
 
+
+//Funcion principal, se manda a llamar con argumentos
 int main(int argc, char *argv[]){
     char binary[32];
     if(argc>=2) { 
-        printf("\n Numero de Argumentos dados: %d",argc); 
+        printf("\n Numero de Argumentos dados: %d",argc-1); 
         printf("\n----Argumentos dados----"); 
         for(int i=1;i<argc;i++) 
             printf("\nargv[%d]: %d",i, asciiHEXToInt(argv[i])); 
