@@ -71,9 +71,10 @@ int asciiHEXToInt(char *cHex)
     return iConvertido;
 }
 
+//Función para convertir de string a double
 double asciiToDouble(char *cNum)
 {
-
+    return strtod(cNum, NULL);
 }
 
 //función principal 
@@ -86,13 +87,15 @@ int main()
     int iBinarioAInt = asciiBinaryToInt(cString);
     printf("%i \n", iBinarioAInt);
 
-    printf("%s", "Introduce un numero en hex: ");
+    printf("%s", "Dame un numero en Hexadecimal: ");
     scanf("%s", cString);
     int iHexAInt = asciiHEXToInt(cString);
     printf("%i \n", iHexAInt);
 
-    printf("%s", "Introduce un numero: ");
+    printf("%s", "Dame un numero: ");
     scanf("%s", cString);
+    double dStringToDouble = asciiToDouble(cString);
+    printf("%f", dStringToDouble);
 
     return 0;
 }
