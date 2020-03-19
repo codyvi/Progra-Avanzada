@@ -59,23 +59,35 @@ int asciiHEXToInt(char *cHex)
     return iConvertido;
 }
 
-int asciiBinaryToInt(char *cString){
-    char cEnd = '\0';
-    int iResult = 0;
+int asciiBinaryToInt(char *cBin)
+{
+    char cFinal = '\0';
+    int iConvertido = 0;
 
     int i = 0;
-    while(*cString != cEnd && i < 8){
-        iResult *= 2;
-        if(*cString == '1'){
-            iResult+=1;
-        } else if(*cString == '0'){
-        } else {
-            return iResult/2;
+    while(cFinal != *cBin && i < 8)
+    {
+        iConvertido *= 2;
+        if(*cBin++ == '1')
+        {
+            iConvertido += 1;
         }
-        cString++;
+
+        else if(*cBin == '0')
+        {
+
+        }
+
+        else
+        {
+            return iConvertido/2;
+        }
+
+        cBin++;
         i++;
+        
     }
-    return iResult;
+    return iConvertido;
 }
 
 int asciiOCTToInt(char *cString){
