@@ -36,32 +36,32 @@ int asciiHEXToInt(char *cHex)
             iConvertido += *cHex - '0';
         }
 
-        if(*cHex == 'A') 
+        else if(*cHex == 'A' || *cHex == 'a') 
         {
             iConvertido+=10;
         }
 
-        if(*cHex == 'B') 
+        else if(*cHex == 'B' || *cHex == 'b') 
         {
             iConvertido+=11;
         }
 
-        if(*cHex == 'C') 
+        else if(*cHex == 'C' || *cHex == 'c') 
         {
             iConvertido+=12;
         }
 
-        if(*cHex == 'D') 
+        else if(*cHex == 'D' || *cHex == 'd') 
         {
             iConvertido+=13;
         }
 
-        if(*cHex == 'E') 
+        else if(*cHex == 'E' || *cHex == 'e') 
         {
             iConvertido+=14;
         }
         
-        if(*cHex == 'F') 
+        else if(*cHex == 'F' || *cHex == 'f') 
         {
             iConvertido+=15;
         }
