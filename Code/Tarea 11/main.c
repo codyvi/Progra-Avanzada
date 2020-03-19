@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Función para convertir strings Hexadecimales a int
+//Función para convertir strings Hexadecimales a entero
 int asciiHEXToInt(char *cHex)
 {
     char cFinal = '\0';
@@ -59,6 +59,7 @@ int asciiHEXToInt(char *cHex)
     return iConvertido;
 }
 
+//función para convertir Binario a entero
 int asciiBinaryToInt(char *cBin)
 {
     char cFinal = '\0';
@@ -90,30 +91,38 @@ int asciiBinaryToInt(char *cBin)
     return iConvertido;
 }
 
-int asciiOCTToInt(char *cString){
+int asciiOCTToInt(char *cOct)
+{
     char cEnd = '\0';
-    int iResult = 0;
+    int iConvertido = 0;
 
     int i = 0;
-    while(*cString != cEnd && i < 8){
-        iResult *= 8;
-        if(*cString <= '7' && *cString >= '0') iResult += *cString - '0';
-        else return iResult/8;
-        cString++;
+    while(*cOct != cEnd && i < 8)
+    {
+        iConvertido *= 8;
+        if(*cOct <= '7' && *cOct >= '0') 
+        {
+            iConvertido += *cOct - '0';
+        }
+        else  return iConvertido/8;
+        cOct++;
         i++;
     }
-    return iResult;
+    return iConvertido;
 }
 
-int divideByTwo(int *i){
+int divideByTwo(int *i)
+{
     return *i >> 1;
 }
 
-int multByTwo(int *i){
+int multByTwo(int *i)
+{
     return *i << 1;
 }
 
-int main(){
+int main()
+{
     char cString[256];
     int iNumber = 0;
     
