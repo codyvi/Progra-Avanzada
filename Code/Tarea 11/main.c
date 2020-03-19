@@ -1,24 +1,62 @@
+//Autor: David Alonso Cantú Martínez
+//Matrícula: A00822455
+//Fecha: 19/03/2020
+//Convierte numeros hexadecimales, binarios, base 8 y dividir ente 2 y multiplicar por 2
+
 #include <stdio.h>
 #include <stdlib.h>
 
-int asciiHEXToInt(char *cString){
-    char cEnd = '\0';
-    int iResult = 0;
+//Función para convertir strings Hexadecimales a int
+int asciiHEXToInt(char *cHex)
+{
+    char cFinal = '\0';
+    int iConvertido = 0;
     int i = 0;
-    while(*cString != cEnd && i < 8){
-        iResult *= 16;
-        if(*cString <= '9' && *cString >= '0') iResult += *cString - '0';
-        else if(*cString == 'A' || *cString == 'a') iResult+=10;
-        else if(*cString == 'B' || *cString == 'b') iResult+=11;
-        else if(*cString == 'C' || *cString == 'c') iResult+=12;
-        else if(*cString == 'D' || *cString == 'd') iResult+=13;
-        else if(*cString == 'E' || *cString == 'e') iResult+=14;
-        else if(*cString == 'F' || *cString == 'f') iResult+=15;
-        else return iResult/16;
-        cString++;
+    while(cFinal != *cHex && i < 8)
+    {
+        iConvertido *= 16;
+        if(*cHex <= '9' && *cHex >= '0') 
+        {
+            iConvertido += *cHex - '0';
+        }
+
+        else if(*cHex == 'A' || *cHex == 'a') 
+        {
+            iConvertido+=10;
+        }
+
+        else if(*cHex == 'B' || *cHex == 'b') 
+        {
+            iConvertido+=11;
+        }
+
+        else if(*cHex == 'C' || *cHex == 'c') 
+        {
+            iConvertido+=12;
+        }
+
+        else if(*cHex == 'D' || *cHex == 'd') 
+        {
+            iConvertido+=13;
+        }
+
+        else if(*cHex == 'E' || *cHex == 'e') 
+        {
+            iConvertido+=14;
+        }
+        
+        else if(*cHex == 'F' || *cHex == 'f') 
+        {
+            iConvertido+=15;
+        }
+
+        else return iConvertido/16;
+
+        cHex++;
+
         i++;
     }
-    return iResult;
+    return iConvertido;
 }
 
 int asciiBinaryToInt(char *cString){
