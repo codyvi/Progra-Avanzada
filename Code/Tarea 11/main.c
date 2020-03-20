@@ -2,9 +2,8 @@
 //Matrícula: A00822455
 //Fecha: 19/03/2020
 //Convierte numeros hexadecimales, binarios, base 8 y dividir ente 2 y multiplicar por 2
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdio.h"
+#include "stdlib.h"
 
 //Función para convertir strings Hexadecimales a entero
 int asciiHEXToInt(char *cHex)
@@ -73,24 +72,13 @@ int asciiBinaryToInt(char *cBin)
         {
             iConvertido += 1;
         }
-
-        else if(*cBin == '0')
-        {
-
-        }
-
-        else
-        {
-            return iConvertido/2;
-        }
-
-        cBin++;
         i++;
         
     }
     return iConvertido;
 }
 
+//Función que convierte base 8 a int
 int asciiOCTToInt(char *cOct)
 {
     char cEnd = '\0';
@@ -111,11 +99,13 @@ int asciiOCTToInt(char *cOct)
     return iConvertido;
 }
 
+//Divide entre 2 con bit operations
 int divideByTwo(int *i)
 {
     return *i >> 1;
 }
 
+//Multiplica por 2 con bit operations
 int multByTwo(int *i)
 {
     return *i << 1;
@@ -125,53 +115,32 @@ int main()
 {
     char cString[256];
     int iNumber = 0;
+
+    printf("%s", "Dame un numero en Hexadecimal: ");
+    scanf("%s", cString);
+    int iHexAInt = asciiHEXToInt(cString);
+    printf("%i \n", iHexAInt);
     
-    while(1 == 1){
-        int option = -1;
-        printf("%s \n", "1. Binario a decimal: ");
-        printf("%s \n", "2. Hexadecimal a decimal: ");
-        printf("%s \n", "3. Octal a decimal: ");
-        printf("%s \n", "4. Multiplicar por dos un decimal: ");
-        printf("%s \n", "5. Dividir por dos un decimal: ");
-        scanf("%d", &option);
-        switch (option){
-            case 1:
-                printf("%s \n", "Introduce un numero en binario: ");
-                scanf("%s", cString);
-                int iBtI = asciiBinaryToInt(cString);
-                printf("%i \n", iBtI);
-                break;
+    printf("%s", "Dame un numero en Binario: ");
+    scanf("%s", cString);
+    int iBinarioAInt = asciiBinaryToInt(cString);
+    printf("%i \n", iBinarioAInt);
 
-            case 2:
-                printf("%s \n", "Introduce un numero en hex: ");
-                scanf("%s", cString);
-                int iHtI = asciiHEXToInt(cString);
-                printf("%i \n", iHtI);
-                break;
+    printf("%s", "Introduce un numero en base 8: ");
+    scanf("%s", cString);
+    int iEtI = asciiOCTToInt(cString);
+    printf("%i \n", iEtI);
+  
+    printf("%s", "Introduce un numero para multiplicar por 2: ");
 
-            case 3:
-                printf("%s \n", "Introduce un numero en base 8: ");
-                scanf("%s", cString);
-                int iEtI = asciiOCTToInt(cString);
-                printf("%i \n", iEtI);
-                break;
+    scanf("%i", &iNumber);
+    int iMb2 = multByTwo(&iNumber);
+    printf("%i \n", iMb2);
+    
+    printf("%s", "Introduce un numero para dividir entre 2: ");
+    scanf("%i", &iNumber);
+    int iDb2 = divideByTwo(&iNumber);
+    printf("%i \n", iDb2);
 
-            case 4:
-                printf("%s \n", "Introduce un numero para multiplicar por 2: ");
-                scanf("%i", &iNumber);
-                int iMb2 = multByTwo(&iNumber);
-                printf("%i \n", iMb2);
-                break;
-
-            case 5:
-                printf("%s \n", "Introduce un numero para dividir entre 2: ");
-                scanf("%i", &iNumber);
-                int iDb2 = divideByTwo(&iNumber);
-                printf("%i \n", iDb2);
-                break;
-            default:
-                break;
-        }
-        printf("%s","\n");
-    }
+    return 0;
 }
