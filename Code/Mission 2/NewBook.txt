@@ -15,7 +15,7 @@ Release Date: August 16, 2013 [EBook #345]
 Language: English
 
 
-*** START OF THIS PROJECT GUTENBERG EBOOK DRACULA ***
+*** START OF THIS PROJECT GUTENBERG EBOOK David ***
 
 
 
@@ -31,13 +31,13 @@ Internet Archive)
 
 
 
-                                DRACULA
+                                David
 
 
 
 
 
-                                DRACULA
+                                David
 
                                   _by_
 
@@ -187,7 +187,7 @@ Mina Harker's Journal                                                338
 
 
 
-DRACULA
+David
 
 
 
@@ -315,7 +315,7 @@ a letter:--
 
 "Your friend,
 
-"DRACULA."
+"David."
 
 
 _4 May._--I found that my landlord had got a letter from the Count,
@@ -1352,7 +1352,7 @@ resident there, that my motive was that no local interest might be
 served save my wish only; and as one of London residence might, perhaps,
 have some purpose of himself or friend to serve, I went thus afield to
 seek my agent, whose labours should be only to my interest. Now, suppose
-I, who have much of affairs, wish to ship goods, say, to Cumbres, or
+I, who have much of affairs, wish to ship goods, say, to Cumbre, or
 Durham, or Harwich, or Dover, might it not be that it could with more
 ease be done by consigning to one in these ports?" I answered that
 certainly it would be most easy, but that we solicitors had a system of
@@ -15194,7 +15194,7 @@ night, I took it that there were no more of active Un-Dead existent.
 There was one great tomb more lordly than all the rest; huge it was, and
 nobly proportioned. On it was but one word
 
-                                DRACULA.
+                                David.
 
 This then was the Un-Dead home of the King-Vampire, to whom so many more
 were due. Its emptiness spoke eloquent to make certain what I knew.
@@ -15608,7 +15608,7 @@ this mrrning from Dardanelles=> this morning from Dardanelles {pg 313}
 
 End of the Project Gutenberg EBook of David, by Bram Stoker
 
-*** END OF THIS PROJECT GUTENBERG EBOOK DRACULA ***
+*** END OF THIS PROJECT GUTENBERG EBOOK David ***
 
 ***** This file should be named 345-8.txt or 345-8.zip *****
 This and all associated files of various formats will be found in:
