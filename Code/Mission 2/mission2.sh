@@ -1,3 +1,8 @@
+#Autor: David Alonso Cantú Martínez
+#Matrícula: A00822455
+#Fecha: 20/03/2020
+#Cambia palabras de un archivo de texto por medio de sed
+
 #!/bin/bash
 
 cat $"Dracula.txt" | sed "s/Dracula/David/g" | \
