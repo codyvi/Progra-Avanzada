@@ -1,3 +1,8 @@
+//A00822455
+//David Alonso Cantu Martinez
+//Second Hour of code
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,11 +15,11 @@
 int isAlpha(int);
 int isDigit(int);
 
-
+//Obtiene el id 
 char *askId();
 
 int isId(char*);
-
+//Usada para obtener el string
 char* extremelyLargeString(char);
 
 char* getNumberFromWord(char*);
@@ -27,7 +32,7 @@ void randomize(char *word);
 char *rtrim(char *, const char *);
 char *ltrim(char *, const char *);
 char *trim(char *, const char *);
-
+//funcion principal
 int main(int argc, char const *argv[]) {
 
   char *AgentId = askId();
