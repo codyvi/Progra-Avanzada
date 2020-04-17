@@ -21,22 +21,24 @@ void error(const char *msg)
 //funcion principal
 int main(int argc, char *argv[])
 {
-    int sockfd, portno, n;
+    int iSockfd, iPortno, iN;
     struct sockaddr_in serv_addr;
     struct hostent *server;
 
     char buffer[256];
-    if (argc < 3) {
+    //Si los argumentos dados son menores a 3, se muestra el uso
+    if (argc < 3) 
+    {
        fprintf(stderr,"usage %s hostname port\n", argv[0]);
        exit(0);
     }
-    portno = atoi(argv[2]);
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) 
-        error("ERROR opening socket");
+    iPortno = atoi(argv[2]);
+    iSockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (iSockfd < 0) 
+        error("ERROR opening socket"); //Si el socket no funciona
     server = gethostbyname(argv[1]);
     if (server == NULL) {
-        fprintf(stderr,"ERROR, no such host\n");
+        fprintf(stderr,"ERROR, no such host\n"); //Si el host no existe
         exit(0);
     }
     bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -44,20 +46,20 @@ int main(int argc, char *argv[])
     bcopy((char *)server->h_addr, 
          (char *)&serv_addr.sin_addr.s_addr,
          server->h_length);
-    serv_addr.sin_port = htons(portno);
-    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
-        error("ERROR connecting");
-    printf("Please enter the message: ");
+    serv_addr.sin_port = htons(iPortno);
+    if (connect(iSockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+        error("ERROR connecting"); //Error de conexion
+    printf("Please enter the message: "); 
     bzero(buffer,256);
     fgets(buffer,255,stdin);
-    n = write(sockfd,buffer,strlen(buffer));
-    if (n < 0) 
-         error("ERROR writing to socket");
+    iN = write(iSockfd,buffer,strlen(buffer));
+    if (iN < 0) 
+         error("ERROR writing to socket"); //Error al escribir en el puerto
     bzero(buffer,256);
-    n = read(sockfd,buffer,255);
-    if (n < 0) 
-         error("ERROR reading from socket");
+    iN = read(iSockfd,buffer,255);
+    if (iN < 0) 
+         error("ERROR reading from socket"); //Error al leer del puerto
     printf("%s\n",buffer);
-    close(sockfd);
+    close(iSockfd);
     return 0;
 }
