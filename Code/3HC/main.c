@@ -14,10 +14,10 @@ typedef struct
     char type[10];
     char str[20];
     char number[15];
-} Coordinate;
+} Coord;
 
 //Structura para guardar las variables de las cordenadas
-struct Row
+struct Vals
 {
     char cLat[100];
     char cLon[100];
@@ -37,10 +37,10 @@ char *substr(char *dst, char *src, size_t offset, size_t length)
 }
 
 //Funcion para comparar latitudes y definir despues con sort donde van a ir
-int compare(const void *s1, const void *s2)
+int cmp(const void *s1, const void *s2)
 {
-    struct Row *e1 = (struct Row *)s1;
-    struct Row *e2 = (struct Row *)s2;
+    struct Vals *e1 = (struct Vals *)s1;
+    struct Vals *e2 = (struct Vals *)s2;
     return e1->iLat - e2->iLat;
 }
 
@@ -49,12 +49,12 @@ int main()
 {
     static const char filename[] = "coordinates.txt"; //Nombre del archivo que voy a leer
     FILE *file = fopen ( filename, "r" ); //Abriendo el archivo
-    Coordinate emp[MAXEMP];
-    struct Row row[MAXEMP];
-    struct Row rowString[100];
+    Coord emp[MAXEMP];
+    struct Vals row[MAXEMP];
+    struct Vals rowString[100];
     char number[1024];
     int i = 0;
-    int counter = 0;
+    int iCounter = 0;
 
     //Loop para leer el archivo
     while(fscanf(file, "%s %s %s", emp[i].type, emp[i].str, emp[i].number) != EOF) 
@@ -62,7 +62,7 @@ int main()
         char output[100];
         if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "N") == 0)
         {
-            counter++;
+            iCounter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " North");
             strcpy(row[i].cLat, output);
@@ -71,7 +71,7 @@ int main()
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "S") == 0)
         {
-            counter++;
+            iCounter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " South");
             strcpy(row[i].cLat, output);
@@ -80,7 +80,7 @@ int main()
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "W") == 0)
         {
-            counter++;
+            iCounter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " West");
             strcpy(row[i].cLon, output);
@@ -89,7 +89,7 @@ int main()
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "E") == 0)
         {
-            counter++;
+            iCounter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " East");
             strcpy(row[i].cLon, output);
@@ -119,7 +119,7 @@ int main()
         };
     }
 
-    qsort(rowString,100, sizeof(struct Row),compare);
+    qsort(rowString,100, sizeof(struct Vals),cmp);
 
  
 
