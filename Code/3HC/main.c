@@ -2,7 +2,6 @@
 //Matrícula: A00822455
 //Fecha: 27/04/2020
 //Código para abrir archivo con coordenadas y convertirlas a dos archivos diferentes con formato diferente
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,10 +19,10 @@ typedef struct
 //Structura para guardar las variables de las cordenadas
 struct Row
 {
-    char cLatitude[100];
-    char cLongitude[100];
-    float iLatitude;
-    float iLongitude;
+    char cLat[100];
+    char cLon[100];
+    float iLat;
+    float iLon;
 };
 
 enum { MAXEMP = 200 };
@@ -42,13 +41,13 @@ int compare(const void *s1, const void *s2)
 {
     struct Row *e1 = (struct Row *)s1;
     struct Row *e2 = (struct Row *)s2;
-    return e1->iLatitude - e2->iLatitude;
+    return e1->iLat - e2->iLat;
 }
 
 //Función principal
 int main()
 {
-    static const char filename[] = "coordinates_pt-1.txt"; //Nombre del archivo que voy a leer
+    static const char filename[] = "coordinates.txt"; //Nombre del archivo que voy a leer
     FILE *file = fopen ( filename, "r" ); //Abriendo el archivo
     Coordinate emp[MAXEMP];
     struct Row row[MAXEMP];
@@ -66,8 +65,8 @@ int main()
             counter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " North");
-            strcpy(row[i].cLatitude, output);
-            row[i].iLatitude = atof(emp[i].number);
+            strcpy(row[i].cLat, output);
+            row[i].iLat = atof(emp[i].number);
         }
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "S") == 0)
@@ -75,8 +74,8 @@ int main()
             counter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " South");
-            strcpy(row[i].cLatitude, output);
-            row[i].iLatitude = atof(emp[i].number);
+            strcpy(row[i].cLat, output);
+            row[i].iLat = atof(emp[i].number);
         }
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "W") == 0)
@@ -84,8 +83,8 @@ int main()
             counter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " West");
-            strcpy(row[i].cLongitude, output);
-            row[i].iLongitude = atof(emp[i].number);
+            strcpy(row[i].cLon, output);
+            row[i].iLon = atof(emp[i].number);
         }
 
         else if(strcmp(&emp[i].str[strlen(emp[i].str)-1], "E") == 0)
@@ -93,9 +92,9 @@ int main()
             counter++;
             substr(output, emp[i].str, 0, strlen(emp[i].str)-1);
             strcat(output, " East");
-            strcpy(row[i].cLongitude, output);
+            strcpy(row[i].cLon, output);
 
-            row[i].iLongitude = atof(emp[i].number);
+            row[i].iLon = atof(emp[i].number);
         }
 
         if(i%2 !=0)
@@ -115,10 +114,10 @@ int main()
     {
         if(i%2 == 0)
         {
-            strcpy(rowString[k].cLatitude, row[i].cLatitude);
-            strcpy(rowString[k].cLongitude, row[i+1].cLongitude);
-            rowString[k].iLatitude =  row[i].iLatitude;
-            rowString[k].iLongitude = row[i+1].iLongitude;
+            strcpy(rowString[k].cLat, row[i].cLat);
+            strcpy(rowString[k].cLon, row[i+1].cLon);
+            rowString[k].iLat =  row[i].iLat;
+            rowString[k].iLon = row[i+1].iLon;
             k++;
         };
     }
@@ -134,7 +133,7 @@ int main()
    
     for(int i = 0; i < 100; i++)
     {
-        fprintf (fp, "%s %s\n", rowString[i].cLatitude, rowString[i].cLongitude);
+        fprintf (fp, "%s %s\n", rowString[i].cLat, rowString[i].cLon);
     }
     fclose (fp);
 
@@ -142,7 +141,7 @@ int main()
     
     for(int i = 0; i < 100; i++)
     {
-        fprintf (fp, "%f %f\n", rowString[i].iLatitude, rowString[i].iLongitude);
+        fprintf (fp, "%f %f\n", rowString[i].iLat, rowString[i].iLon);
     }
     fclose (fp);
 }
