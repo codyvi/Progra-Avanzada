@@ -103,10 +103,7 @@ int main()
         }
         i++;
 
-        if(counter%2 == 0)
-        {
-            printf("\n");
-        }
+ 
     }
 
     int k = 1;
@@ -144,4 +141,6 @@ int main()
         fprintf (fp, "%f %f\n", rowString[i].iLat, rowString[i].iLon);
     }
     fclose (fp);
+
+    printf("Archivos creados");
 }
