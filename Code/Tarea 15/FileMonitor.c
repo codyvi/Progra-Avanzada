@@ -4,7 +4,7 @@
 #include <conio.h>
 
 void main() {
-	char dirStr[]="C:\\Users\\David\\Documents\\PruebaProgra";
+	char dirStr[]="C:\\Users\\David\\Documents\\PruebaProgra\\Temp";
 	char dirFileStr[]="C:\\Users\\David\\Documents\\PruebaProgra\\Temp\\Algo1.txt";
 	char dirFileStr2[]="C:\\Users\\David\\Documents\\PruebaProgra\\Temp\\Algo2.txt";
 	HANDLE changeNotifHandle;
@@ -30,8 +30,8 @@ void main() {
 		if (lastError==ERROR_FILE_NOT_FOUND)
 			return;	//Archivo no localizado, quizas lo borraron ... terminar el programa
 		//Otra posibilidad del error es que el archivo este abierto y LOCKED ...
-		// ... habrï¿½ que decidir como proceder (terminar el programa tambiï¿½n o ciclarse esperando)
-		// ... pero esto no lo vamos a hacer aquï¿½ simplemente tomamos valores de tiempo en ceros.
+		// ... habr� que decidir como proceder (terminar el programa tambi�n o ciclarse esperando)
+		// ... pero esto no lo vamos a hacer aqu� simplemente tomamos valores de tiempo en ceros.
 	}
 	while (chr!=27) {
 		if (!flag)
@@ -57,10 +57,10 @@ void main() {
 								printf("El archivo NO cambio\n");
 							}
 						}
-						CloseHandle(changeNotifHandle);
+						CloseHandle(fileHandle);
 					} else {
 						lastError=GetLastError();
-						if (lastError == ERROR_SHARING_VIOLATION)	//ï¿½Ups!, que mala suerte el archivo cambio y esta LOCKED
+						if (lastError == ERROR_SHARING_VIOLATION)	//�Ups!, que mala suerte el archivo cambio y esta LOCKED
 							printf("El archivo cambio!\n");
 						else if (lastError == ERROR_FILE_NOT_FOUND) {
 							printf("Borraron el achivo ... que hacemos?\n");
