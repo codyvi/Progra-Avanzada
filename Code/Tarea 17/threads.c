@@ -143,7 +143,7 @@ int main (int argc, char *argv[]) {
     
     char file_name[25];
 
-    printf("Name of the file, with .txt \n");
+    printf("Give me the name of the file with extension: \n");
     scanf("%s", file_name);
 
     // Numero de lineas del archivo
