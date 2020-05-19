@@ -22,6 +22,7 @@ struct Node *head = NULL;
 void insert(struct Agente);
 void traverse();
 void delete(int);
+void encripted();
 void search(char[30]);
 void searchPorActivo(char [30]);
 int misionesVal(char[12]);
@@ -29,6 +30,7 @@ int activosVal(char[13]);
 int counter = 0;
 int counterActivos = 0;
 int counterMisiones = 0;
+int isEncripted = 0;
 
 int main(){
     int input, data, numActivos, numMisiones;
@@ -45,7 +47,59 @@ int main(){
     } else {
         printf("Llave incorrecta");
         llave = 4;
+        encripted(1);
+        isEncripted = 1;
     }
+    if(isEncripted == 1){
+        for(;;){
+        struct Agente A;
+        scanf("%d", &input);
+         if  (input == 1) {
+            printf("Lpjuhvd hñ proeuh ghñ djhpwh: ");
+            scanf("%s", A.cName);
+            printf("Lpjuhvd hñ dshññlgr ghñ djhpwh: ");
+            scanf("%s", A.cLastName);
+            printf("Lpjuhvd ñd hgdg ghñ djhpwh: ");
+            scanf("%d", &A.iAge);
+            // scanf("%d", &data);
+
+            printf("Lpjuhvd fxdpwrv dfwlyrv wlhph hñ djhpwh\n");
+            scanf("%d", &numActivos);
+            while(numActivos > 0){
+                char cActivos[13] = "";
+                printf("Lpjuhvd dñ dfwlyr\n");
+                scanf("%s", cActivos);
+                if(activosVal(cActivos)){
+                    strcpy(A.cActivos[counterActivos], cActivos);
+                    counterActivos++;
+                    printf("Djhpwh dqdglgd gh odphud halwrvd \n");
+                    numActivos--;
+                } else {
+                    printf("Djhpwh pr fxosñh frp hñ iruodwr\n");
+                }
+            }
+
+            printf("Lpjuhvd fxdpwdv olvlrphv wlhph hñ djhpwh\n");
+            scanf("%d", &numMisiones);
+            while(numMisiones > 0){
+                char cMission[12] = "";
+                printf("Lpjuhvd ñd vljxlhpwh olvlrp\n");
+                scanf("%s", cMission);
+                if(misionesVal(cMission)){
+                    strcpy(A.cMission[counterMisiones], cMission);
+                    counterMisiones++;
+                    printf("Olvlrp dqdglgd gh odphud halwrvd \n");
+                    numMisiones--;
+                } else {
+                    printf("Olvlrp pr fxosñh frp hñ iruodwr\n");
+                }
+            }
+            insert(A);
+
+         }
+    }
+}
+    else{
     for(;;){
         struct Agente A;
         printf("\n-------------------------------------------\n");
@@ -127,6 +181,7 @@ int main(){
         }
         printf("\n-------------------------------------------\n");
     }
+}
 }
 
 void searchPorActivo(char cActivo[30]){
@@ -377,4 +432,20 @@ void delete(int x){
 
     prev->next = temp->next; 
     free(temp);
+}
+
+void encripted(int donde){
+    if(donde == 1){
+        printf("\n-------------------------------------------\n");
+        printf("1. Lpwurgxflu xp pxhyr Djhpwh.\n \n");
+        printf("2. Losulolu ñrv djhpwhv.\n \n");
+        printf("3. Eruudu xp djhpwh.\n \n");
+        printf("4. Exvfdu xp djhpwh sru dshññlgr.\n \n");
+        printf("5. Exvfdu xp djhpwh sru dfwlyr.\n \n");
+    }
+
+    else if(donde == 2){
+        //pues nada pasa 
+
+    }
 }
