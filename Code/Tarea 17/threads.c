@@ -1,3 +1,6 @@
+//David Alonso Cantu Martinez A00822455
+//Practica 17
+
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -9,18 +12,18 @@
 #define NUM_THREADS 100
 
 
-typedef struct thread {
+typedef struct myThread {
     int id;
     int time;
     int * dependents;
     int array_size;
-} thread;
+} myThread;
 
 pthread_t threads[NUM_THREADS];
 
-// Constructor
-thread * Thread(int id, int time, int dependents[100], int array_size){
-  thread * t = malloc(sizeof(thread));
+//Constructor
+myThread * Thread(int id, int time, int dependents[100], int array_size){
+  myThread * t = malloc(sizeof(myThread));
   t->time = time;
   t->id = id;
   t->dependents = dependents;
@@ -28,7 +31,7 @@ thread * Thread(int id, int time, int dependents[100], int array_size){
   return t;
 }
 
-// Cambiar un thread en string con identificador a int
+//Convierte el id del Thread a int
 int parseThreadId(char * tid){
     int iTid = 0;
     int i = 1;
@@ -42,7 +45,7 @@ int parseThreadId(char * tid){
     return iTid;
 }
 
-// Leer las lineas del archivo
+//Leer las lineas del archivo
 int countLinesFromFile(char * file_name){
     int i = 0;
     char tmp[100];
@@ -56,15 +59,15 @@ int countLinesFromFile(char * file_name){
     return i;
 }
 
-// Obtener el numero de elementos, numero de dependientes
+//Obtener el numero de elementos, numero de dependientes
 int count_num_elements(char * orig_value){
-    // Caso base
+    //Si no tiene dependiente se devuelve 0
     if(*orig_value == '-') return 0;
 
     char * value = malloc(sizeof(orig_value));
     strcpy(value, orig_value);
     int num_elems = 0;
-    // Ir haciendo split
+    //Ir haciendo split
     char *pt;
     pt = strtok (value,",");
     while (pt != NULL) {
@@ -75,17 +78,17 @@ int count_num_elements(char * orig_value){
     return num_elems;
 }
 
-// Por el formato es necesario quitarle el nombre del thread
+//Por el formato es necesario quitarle el nombre del thread
 int * separete_elements(char * value, int num_elems){
-    // Creamos un arreglo dinamico para guardar los ids
+    //Creamos un arreglo dinamico para guardar los ids
     int * elems = malloc(num_elems * sizeof(int));
     int i = 0;
 
-    // Ir haciendo split
+    //Ir haciendo split
     char *pt;
     pt = strtok(value,",");
     while(pt != NULL){
-        // Cambiamos el fornato a int
+        //Cambiamos a int
         int num = parseThreadId(pt);
         elems[i] = num;
         i++;
@@ -96,34 +99,34 @@ int * separete_elements(char * value, int num_elems){
 }
 
 
-// Obetner los threads del archivo
-thread * * readFileForThreads(char * file_name, int iNumberOfLines){
-    // Donde guardaremos el id del thread
+//Obetner los threads del archivo
+myThread * * readFileForThreads(char * file_name, int iNumberOfLines){
+    //Donde guardaremos el id del thread
     char tid[10];
-    // Donde guardamos los diferentes threads a los que depende
+    //Donde guardamos los diferentes threads a los que depende
     char dependents[100];
-    // Tiempo en que tarda el thread y variable controlador para el arreglo
+    //Tiempo en que tarda el thread y variable controlador para el arreglo
     int tTime, i = 0;
-    // Leemos el archivo
+    //Leemos el archivo
     FILE *f;
-    // Creamos un arreglo del tamaño necesario para guardar los threads
-    thread * * struct_threads = malloc(iNumberOfLines * sizeof(thread));
+    //Creamos un arreglo del tamaño necesario para guardar los threads
+    myThread * * struct_threads = malloc(iNumberOfLines * sizeof(myThread));
     f = fopen(file_name, "r");
 
-    // Leemos el archivo, por la naturaleza del formato, necesitamos convertirlo
+    //Leemos el archivo, por la naturaleza del formato, necesitamos convertirlo
     while(fscanf(f, "%s\t%d\t%s", tid, &tTime, dependents) != EOF){
         int dep_size = count_num_elements(dependents); //Obtener el numero de dependienes
-        int * int_dependents = separete_elements(dependents, dep_size); // Obtener el id 
-        int iTid = parseThreadId(tid); // Obtener el id del thread
+        int * int_dependents = separete_elements(dependents, dep_size); //Obtener el id 
+        int iTid = parseThreadId(tid); //Obtener el id del thread
         struct_threads[i++] = Thread(iTid, tTime, int_dependents, dep_size);
     }
     fclose(f);
     return struct_threads;
 }
 
-// Funcion principal
+//Funcion principal
 void *printHello (void *threadid){
-    thread *thread = (struct thread*)threadid;
+    myThread *thread = (struct myThread*)threadid;
     printf("------Hello World! It’s me, thread #%d!------\n", thread->id);
 
     for(int i = 0; i < thread->array_size; i++){
@@ -131,18 +134,13 @@ void *printHello (void *threadid){
         pthread_join(threads[thread->dependents[i]-1],NULL);
     }
 
-    // unsigned int time_to_sleep = thread->time;
-    // while(time_to_sleep){
-    //     printf("It’s me, thread #%d!, processing for %i seconds\n", thread->id, time_to_sleep);
-    //     time_to_sleep = sleep(time_to_sleep);
-    // }
 
     printf("'''It’s me, thread #%d EXITING!''' \n", thread->id);
     pthread_exit(NULL);
 }
 
 int main (int argc, char *argv[]) {
-    //srand(time(NULL));
+    
     char file_name[25];
 
     printf("Name of the file, with .txt \n");
@@ -150,7 +148,7 @@ int main (int argc, char *argv[]) {
 
     // Numero de lineas del archivo
     int iNumberOfLines = countLinesFromFile(file_name);
-    thread * * thread_list = readFileForThreads(file_name, iNumberOfLines);
+    myThread * * thread_list = readFileForThreads(file_name, iNumberOfLines);
 
     int rc = 0;
     int t = 0;
