@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <omp.h>
-#include <time.h>
+
 
 int omp_get_thread_num();
 
@@ -24,7 +24,6 @@ void single(){
         area += width * height;
     }
     pi = 4.0 * area;
-    stop = clock();
     printf("%.8g\n", pi);
  
     return;
