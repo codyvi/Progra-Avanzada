@@ -1,3 +1,5 @@
+//A00822455 David Alonso Cantú Martínez
+//Programa para calcular pi
 #include <stdio.h>
 #include <math.h>
 #include <omp.h>
@@ -5,6 +7,7 @@
 
 int omp_get_thread_num();
 
+//Funcion single thread
 void single(time_t start, time_t stop){
     int iRec = 0;
     printf("Dame el numero de rectangulos\n");
@@ -34,6 +37,7 @@ void single(time_t start, time_t stop){
     return;
 }
 
+//Función multithread
 void multi(time_t start, time_t stop){
     int iRec = 0;
 
@@ -68,6 +72,7 @@ void multi(time_t start, time_t stop){
     return;
 }
 
+//Función principal
 int main() {
     int option = 0;
     time_t start,stop;
