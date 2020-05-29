@@ -26,12 +26,12 @@ void single(time_t start, time_t stop){
         height = sqrt(1.0 - x * x);
         area += width * height;
     }
-    pi = 4.0 * area;
+    pi = 4.0 * (float)area;
     stop = clock();
     double elapsed = 0.0;
     elapsed += (double)(stop-start)/CLOCKS_PER_SEC;
 
-    printf("%.8g\n", pi);
+    printf("PI = %10.15lf\n", pi);
     printf("Time: %f seconds", elapsed);
  
     return;
@@ -67,7 +67,7 @@ void multi(time_t start, time_t stop){
     double elapsed = 0.0;
     elapsed += (double)(stop-start)/CLOCKS_PER_SEC;
 
-    printf("%.8g\n", pi);
+    printf("PI = %10.15lf\n", pi);
     printf("Time: %f seconds", elapsed);
     return;
 }
