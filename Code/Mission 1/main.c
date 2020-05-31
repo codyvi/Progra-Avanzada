@@ -1,3 +1,9 @@
+//Autor: David Alonso Cantú Martínez
+//Matrícula: A00822455
+//Fecha: 18/02/2020
+//Menu donde se guardan los datos de los agentes, se pueden desplegar, agregar o borrar. 
+//Si no se da la clave se va mostrar encriptado
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -455,10 +461,10 @@ int main() {
 		printEncrypted("5. Salir del sistema.\n\n", encrypt);
 		
 		scanf(" %s", temp);
-
-        if(strcmp("DEncrypt", temp) == 0) {
+        //Llave para desencriptar
+        if(strcmp("Dencrypt", temp) == 0) {
             encrypt = false;
-            printEncrypted("Autenticado correctamente. Bienvenido Agente\n", encrypt);
+            printEncrypted("Clave correcta. Bienvenido Agente\n", encrypt);
         } else {
             option = atoi(temp);
 
