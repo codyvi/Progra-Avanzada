@@ -1,451 +1,655 @@
+//Autor: David Alonso Cantú Martínez
+//Matrícula: A00822455
+//Fecha: 18/02/2020
+//Menu donde se guardan los datos de los agentes, se pueden desplegar, agregar o borrar. 
+//Si no se da la clave se va mostrar encriptado
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
-struct Agente{
-    char cName[30];
-    char cLastName[30];
-    int iAge;
-    char cGender[12];
-    char cMission[12][12];
-    char cActivos[13][13];
+// For dynamic string lists
+struct TextNode{
+	char text[14];
+	struct TextNode *next;
 };
 
-struct Node{
-    int data;
-    struct Node *next;
-    struct Agente A;
+// Dynamic list of strings
+struct TextList{
+	struct TextNode *head, *tail;
 };
 
-struct Node *head = NULL;
-void insert(struct Agente);
-void traverse();
-void delete(int);
-void encripted();
-void search(char[30]);
-void searchPorActivo(char [30]);
-int misionesVal(char[12]);
-int activosVal(char[13]);
-int counter = 0;
-int counterActivos = 0;
-int counterMisiones = 0;
-int isEncripted = 0;
+// Agent information
+struct Agent{
+	int ID;
+    char name[30];
+    char lastName [30];
+    int age;
+    struct TextList actives;
+    struct TextList missions;
+};
 
-int main(){
-    int input, data, numActivos, numMisiones;
-    char cActivoOrApellido[20] = "";
-    int llave = 4;
-    int intento;
-    printf("Introduzca la llave:\n \n");
-    printf("(Llave %d )\n", llave);
-    scanf("%d", &intento);
+// For dynamic list of agents
+struct AgentNode{
+	struct Agent agent;
+	struct AgentNode *next;
+};
 
-    if(intento == llave){
-        printf("Llave correcta");
-        llave = 0;
-    } else {
-        printf("Llave incorrecta");
-        llave = 4;
-        encripted(1);
-        isEncripted = 1;
-    }
-    if(isEncripted == 1){
-        for(;;){
-        struct Agente A;
-        scanf("%d", &input);
-         if  (input == 1) {
-            printf("Lpjuhvd hñ proeuh ghñ djhpwh: ");
-            scanf("%s", A.cName);
-            printf("Lpjuhvd hñ dshññlgr ghñ djhpwh: ");
-            scanf("%s", A.cLastName);
-            printf("Lpjuhvd ñd hgdg ghñ djhpwh: ");
-            scanf("%d", &A.iAge);
-            // scanf("%d", &data);
+// Dynamic list of agents
+struct AgentList{
+	struct AgentNode *head;
+	struct AgentNode *tail;
+};
 
-            printf("Lpjuhvd fxdpwrv dfwlyrv wlhph hñ djhpwh\n");
-            scanf("%d", &numActivos);
-            while(numActivos > 0){
-                char cActivos[13] = "";
-                printf("Lpjuhvd dñ dfwlyr\n");
-                scanf("%s", cActivos);
-                if(activosVal(cActivos)){
-                    strcpy(A.cActivos[counterActivos], cActivos);
-                    counterActivos++;
-                    printf("Djhpwh dqdglgd gh odphud halwrvd \n");
-                    numActivos--;
-                } else {
-                    printf("Djhpwh pr fxosñh frp hñ iruodwr\n");
-                }
-            }
+struct AgentList agents;
+int currentID = 0;
 
-            printf("Lpjuhvd fxdpwdv olvlrphv wlhph hñ djhpwh\n");
-            scanf("%d", &numMisiones);
-            while(numMisiones > 0){
-                char cMission[12] = "";
-                printf("Lpjuhvd ñd vljxlhpwh olvlrp\n");
-                scanf("%s", cMission);
-                if(misionesVal(cMission)){
-                    strcpy(A.cMission[counterMisiones], cMission);
-                    counterMisiones++;
-                    printf("Olvlrp dqdglgd gh odphud halwrvd \n");
-                    numMisiones--;
-                } else {
-                    printf("Olvlrp pr fxosñh frp hñ iruodwr\n");
-                }
-            }
-            insert(A);
+// Insert agent to list 
+void insertAgent(struct Agent agent) {
+	struct AgentNode *newAgentNode, *tmp;
 
-         }
-    }
-}
-    else{
-    for(;;){
-        struct Agente A;
-        printf("\n-------------------------------------------\n");
-        printf("1. Introducir un nuevo Agente.\n \n");
-        printf("2. Imprimir los agentes.\n \n");
-        printf("3. Borrar un agente.\n \n");
-        printf("4. Buscar un agente por apellido.\n \n");
-        printf("5. Buscar un agente por activo.\n \n");
-        scanf("%d", &input);
-        if  (input == 1) {
-            printf("Ingresa el nombre del agente: ");
-            scanf("%s", A.cName);
-            printf("Ingresa el apellido del agente: ");
-            scanf("%s", A.cLastName);
-            printf("Ingresa la edad del agente: ");
-            scanf("%d", &A.iAge);
-            // scanf("%d", &data);
+	newAgentNode = (struct AgentNode*)malloc(sizeof(struct AgentNode));
+	
+	newAgentNode->agent = agent;
+	newAgentNode->next = NULL;
 
-            printf("Ingresa cuantos activos tiene el agente\n");
-            scanf("%d", &numActivos);
-            while(numActivos > 0){
-                char cActivos[13] = "";
-                printf("Ingresa al activo\n");
-                scanf("%s", cActivos);
-                if(activosVal(cActivos)){
-                    strcpy(A.cActivos[counterActivos], cActivos);
-                    counterActivos++;
-                    printf("Agente añadida de manera exitosa \n");
-                    numActivos--;
-                } else {
-                    printf("Agente no cumple con el formato\n");
-                }
-            }
-
-            printf("Ingresa cuantas misiones tiene el agente\n");
-            scanf("%d", &numMisiones);
-            while(numMisiones > 0){
-                char cMission[12] = "";
-                printf("Ingresa la siguiente mision\n");
-                scanf("%s", cMission);
-                if(misionesVal(cMission)){
-                    strcpy(A.cMission[counterMisiones], cMission);
-                    counterMisiones++;
-                    printf("Mision añadida de manera exitosa \n");
-                    numMisiones--;
-                } else {
-                    printf("Mision no cumple con el formato\n");
-                }
-            }
-            insert(A);
-        }
-        else if (input == 2) {
-            traverse();
-        }
-        else if (input == 3) {
-            traverse();
-            if(head != NULL){
-                printf("Introduce el ID del elemento a borrar: \n");
-                scanf("%d", &data);
-                delete(data);
-            }
-        }
-
-        else if (input == 4){
-            traverse();
-            if(head != NULL){
-                printf("Introduce el apellido del agente a buscar: \n");
-                scanf("%s", cActivoOrApellido);
-                search(cActivoOrApellido);
-            }
-        }
-        else if (input == 5){
-            traverse();
-            if(head != NULL){
-                printf("Introduce el activo del agente a buscar: \n");
-                scanf("%s", cActivoOrApellido);
-                searchPorActivo(cActivoOrApellido);
-            }
-        }
-        printf("\n-------------------------------------------\n");
-    }
-}
+	if(agents.head == NULL) {
+		agents.head = newAgentNode;
+		agents.tail = newAgentNode;
+	}
+	else {
+		agents.tail->next = newAgentNode;
+		agents.tail = agents.tail->next;
+	}
 }
 
-void searchPorActivo(char cActivo[30]){
-    struct Node *temp;
-    temp = head;
+// Insert validated active string
+void insertActive(struct Agent *agent, char active[14]) {
+	struct TextNode *newActiveNode, *tmp;
 
-    char nuevoApellido[30] = "";
-    int numActivos, numMisiones;
-    while(temp != NULL){
-        for(int i = 0; i < counterActivos; i++){
-            if(!strcmp(temp->A.cActivos[i], cActivo)){
-                printf("Encontrado \n");
-                int opcion, opcion2;
-                printf("Quieres Editar al agente? (1)\n");
-                printf("Quieres Borrar al agente? (2)\n");
-                scanf("%i", &opcion);
-                if(opcion == 1){
-                    printf("Quieres Editar los activos? (1)\n");
-                    printf("Quieres Editar las misiones? (2)\n");
-                    scanf("%i", &opcion2);
-                    if(opcion2 == 1){
-                        printf("Ingresa cuantos activos agregar\n");
-                        scanf("%d", &numActivos);
-                        while(numActivos > 0){
-                            char cActivos[13] = "";
-                            printf("Ingresa al activo\n");
-                            scanf("%s", cActivos);
-                            if(activosVal(cActivos)){
-                                strcpy(temp->A.cActivos[counterActivos], cActivos);
-                                counterActivos++;
-                                printf("Agente añadida de manera exitosa \n");
-                                numActivos--;
-                            } else {
-                                printf("Agente no cumple con el formato\n");
-                            }
-                        }
-                    }
-                    if(opcion2 == 2){
-                        printf("Ingresa cuantas misiones tiene el agente\n");
-                        scanf("%d", &numMisiones);
-                        while(numMisiones > 0){
-                            char cMission[12] = "";
-                            printf("Ingresa la siguiente mision\n");
-                            scanf("%s", cMission);
-                            if(misionesVal(cMission)){
-                                strcpy(temp->A.cMission[counterMisiones], cMission);
-                                counterMisiones++;
-                                printf("Mision añadida de manera exitosa \n");
-                                numMisiones--;
-                            } else {
-                                printf("Mision no cumple con el formato\n");
-                            }
-                        }
-                    }
-                }
-                if (opcion == 2){
-                    delete(temp->data);
-                }
-                traverse();
-                break;
-            } else {
-                printf("No encontrado \n");
-            }
-        }
-        temp = temp->next; 
-    }
-
+	newActiveNode = (struct TextNode*)malloc(sizeof(struct TextNode));
+	
+	strncpy(newActiveNode->text, active, 14);
+	newActiveNode->text[13] = '\0';
+	newActiveNode->next = NULL;
+	
+	if(agent->actives.head == NULL) {
+		agent->actives.head = newActiveNode;
+		agent->actives.tail = newActiveNode;
+	}
+	else {
+		agent->actives.tail->next = newActiveNode;
+		agent->actives.tail = agent->actives.tail->next;
+	}
 }
 
-void search(char cApellido[30]){
-    struct Node *temp;
-    temp = head;
+// Insert mission active string
+void insertMission(struct Agent *agent, char mission[14]) {
+	struct TextNode *newActiveNode, *tmp;
+	
+	newActiveNode = (struct TextNode*)malloc(sizeof(struct TextNode));
+	
+	strncpy(newActiveNode->text, mission, 14);
+	newActiveNode->text[13] = '\0';
+	newActiveNode->next = NULL;
+	
+	if(agent->missions.head == NULL) {
+		agent->missions.head = newActiveNode;
+		agent->missions.tail = newActiveNode;
+	}
+	else {
+		agent->missions.tail->next = newActiveNode;
+		agent->missions.tail = agent->missions.tail->next;
+	}
+}
 
-    char nuevoApellido[30] = "";
-    int numActivos, numMisiones;
-    while(temp != NULL){
-        if(!strcmp(temp->A.cLastName, cApellido)){
-            printf("Encontrado \n");
-            int opcion, opcion2;
-            printf("Quieres Editar al agente? (1)\n");
-            printf("Quieres Borrar al agente? (2)\n");
-            scanf("%i", &opcion);
-            if(opcion == 1){
-                printf("Quieres Editar los activos? (1)\n");
-                printf("Quieres Editar las misiones? (2)\n");
-                scanf("%i", &opcion2);
-                if(opcion2 == 1){
-                    printf("Ingresa cuantos activos agregar\n");
-                    scanf("%d", &numActivos);
-                    while(numActivos > 0){
-                        char cActivos[13] = "";
-                        printf("Ingresa al activo\n");
-                        scanf("%s", cActivos);
-                        if(activosVal(cActivos)){
-                            strcpy(temp->A.cActivos[counterActivos], cActivos);
-                            counterActivos++;
-                            printf("Agente añadida de manera exitosa \n");
-                            numActivos--;
-                        } else {
-                            printf("Agente no cumple con el formato\n");
-                        }
-                    }
-                }
-                if(opcion2 == 2){
-                    printf("Ingresa cuantas misiones tiene el agente\n");
-                    scanf("%d", &numMisiones);
-                    while(numMisiones > 0){
-                        char cMission[12] = "";
-                        printf("Ingresa la siguiente mision\n");
-                        scanf("%s", cMission);
-                        if(misionesVal(cMission)){
-                            strcpy(temp->A.cMission[counterMisiones], cMission);
-                            counterMisiones++;
-                            printf("Mision añadida de manera exitosa \n");
-                            numMisiones--;
-                        } else {
-                            printf("Mision no cumple con el formato\n");
-                        }
-                    }
-                }
+void printEncrypted(char* message, bool encrypted) {
+    if(!encrypted) {
+        printf("%s", message);
+    } 
+    else {
+        int i = 0;
+        while(message[i] != '\0') {
+            if(message[i] == '\n'){
+                printf("\n");
             }
-            if (opcion == 2){
-                delete(temp->data);
+            else if(message[i] == '\t'){
+                printf("\t");
             }
-            traverse();
+            else {
+                printf("%c", message[i]+5);
+            }
+            i++;
+        }
+    }
+}
+
+// Print any general dynamic string list
+void printTextList(struct TextList list, bool encrypted) {
+	struct TextNode *currentTextNode = list.head;
+    char temp [20];
+	while (currentTextNode != NULL) {
+        snprintf(temp, 20, "\t %s \n", currentTextNode->text);
+        printEncrypted(temp, encrypted);
+		currentTextNode = currentTextNode->next;
+	}
+	
+}
+
+// Print agent information
+void printAgent(struct Agent agent, bool encrypted) {
+    char temp[100];
+
+	printEncrypted("\nAgent: \n", encrypted);
+
+    snprintf(temp, 100, "ID: %d\n", agent.ID);
+	printEncrypted(temp, encrypted);
+
+    snprintf(temp, 100, "Name: %s\n", agent.name);
+	printEncrypted(temp, encrypted);
+
+    snprintf(temp, 100, "Last name: %s\n", agent.lastName);
+	printEncrypted(temp, encrypted);
+
+    snprintf(temp, 100, "Age: %d\n", agent.age);
+	printEncrypted(temp, encrypted);
+    
+	printEncrypted("Actives:\n", encrypted);
+	if(agent.actives.head == NULL) {
+		printEncrypted("\tNo se registraron activos para este agente.\n", encrypted);
+	}
+	else {
+		printTextList(agent.actives, encrypted);
+	}
+
+    printEncrypted("Missions:\n", encrypted);
+	if(agent.missions.head == NULL) {
+		printEncrypted("\tNo se registraron misiones para este agente.\n", encrypted);
+	}
+	else {
+		printTextList(agent.missions, encrypted);
+	}
+}
+
+// Print complete list of agents
+void printAgents(bool encrypted) {
+	struct AgentNode *currentAgentNode = agents.head;
+	
+	printf("\n");
+
+	if(currentAgentNode == NULL) {
+		printEncrypted("No hay agentes registrados.", encrypted);
+		return;
+	}
+
+	while(currentAgentNode != NULL) {
+		printAgent(currentAgentNode->agent, encrypted);
+		currentAgentNode = currentAgentNode->next;
+	}
+}
+
+// Validate mission string
+bool validateMission(char mission[13]) {
+	for(int i = 0; i < 12; i++) {
+		if( i < 3) {
+			if(mission[i] < 'A' || mission[i] > 'Z' &&
+                mission[i] < 'a' || mission[i] > 'z') {
+					return false;
+			}
+		}
+        else if (mission[i] < '0' || mission[i] > '9') {
+			return false;
+		}
+	}
+	if(mission[12] != '\0') {
+		return false;
+	}
+	
+	return true;
+}
+
+// Validate active string
+bool validateActive(char active[14]) {
+    for(int i = 0; i < 13; i++) {
+		if( i < 4) {
+			if(active[i] < 'A' || active[i] > 'Z' && 
+			    active[i] < 'a' || active[i] > 'z') {
+					return false;
+				}
+		} else if (active[i] < '0' || active[i] > '9') {
+			return false;
+		}
+	}
+	if(active[13] != '\0') {
+		return false;
+	}
+	
+	return true;
+}
+
+// Delete agent by given ID
+bool deleteAgentByID(int id) {
+	struct AgentNode *agentToDelete, *tmp;
+
+	if(agents.head->agent.ID == id) {
+		agentToDelete = agents.head;
+		agents.head = agents.head->next;
+		free(agentToDelete);
+		return true;
+	}
+
+	agentToDelete = agents.head;
+
+	while(agentToDelete->next != NULL && agentToDelete->next->agent.ID != id) {
+		agentToDelete = agentToDelete->next;
+	}
+
+	if(agentToDelete->next != NULL) {
+		tmp = agentToDelete->next;
+		agentToDelete->next = agentToDelete->next->next;
+		free(tmp);
+		return true;
+	}
+
+	return false;
+}
+
+bool foundInTextList(struct TextList list, char query[30]){
+    struct TextNode *currentNode = list.head;
+
+    while(currentNode != NULL) {
+        if(strcmp(currentNode->text, query) == 0) {
+            return true;
+        }
+        currentNode = currentNode->next;
+    }
+    return false;
+}
+
+void findAgent(char query[30], bool encrypted){
+    bool found = false,  exit = false, keepAsking = true, keepInputing = true;
+    int option;
+    char temp[20], question;
+    struct AgentNode *agentToFind;
+    struct Agent *agent;
+
+    agentToFind = agents.head;
+
+    while(agentToFind != NULL){
+        if(strcmp(agentToFind->agent.lastName, query)==0 || foundInTextList(agentToFind->agent.actives, query)){
+            found = true;
+            agent = &agentToFind->agent;
+        }
+        
+        agentToFind = agentToFind->next;
+    }
+
+    if(!found) {
+        printEncrypted("No se encontró al agente\n", encrypted);
+        return;
+    }
+
+    printAgent(*agent, encrypted);
+    while(!exit){
+        printEncrypted("\nDesea borrarlo(1), editarlo(2) o regresar al menu principal(3)?\n", encrypted);
+        scanf(" %s", temp);
+
+        option = atoi(temp);
+
+        switch (option) {
+        case 1:
+            deleteAgentByID(agent->ID);
+            printEncrypted("El agente nunca existió.\n Regresando al menu principal... \n", encrypted);
+            exit = true;
             break;
+        
+        case 2:
+                printEncrypted("\nIngrese el nombre nuevo del agente: ", encrypted);
+                scanf(" %s", agent->name);
+                
+                printEncrypted("Ingrese el apellido nuevo del agente: ", encrypted);
+                scanf(" %s", agent->lastName);
+                
+                printEncrypted("Ingrese la edad nueva del agente: ", encrypted);
+                scanf(" %s", temp);
+                agent->age = atoi(temp);
+
+                // Validate age
+                while(agent->age <= 0) {
+                    printEncrypted("Edad invalida, ingrese de nuevo: ", encrypted);
+                    scanf(" %s", temp);
+                    agent->age = atoi(temp);
+                }
+
+                keepAsking = true;
+                while (keepAsking) {
+                    printEncrypted("Desea ingresar un activo nuevo? (Y/N) ", encrypted);
+                    scanf(" %c", &question);
+                    switch (question) {
+                        case 'y':
+                        case 'Y':
+                            keepInputing = true;
+                            keepAsking = false;
+                            break;
+                        case 'n':
+                        case 'N':
+                            keepInputing = false;
+                            keepAsking = false;
+                            break;
+                        default:
+                            printEncrypted("Opcion invalida, intente nuevamente.\n", encrypted);
+                            break;
+                    }
+                }
+                
+                while (keepInputing) {
+                    printEncrypted("Ingrese el activo: ", encrypted);
+                    scanf(" %s", temp);
+                    while(!validateActive(temp)) {
+                        printEncrypted("Activo invalido, intente nuevamente (Formato: 4 caracteres y 9 digitos): ", encrypted);
+                        scanf(" %s", temp);
+                    }
+
+                    insertActive(agent, temp);
+                    printEncrypted("Activo agregado correctamente, ", encrypted);
+
+                    keepAsking = true;
+                    while (keepAsking) {
+                        printEncrypted(" desea agregar otro activo? (Y/N) ", encrypted);
+                        scanf(" %c", &question);
+                        switch (question) {
+                            case 'y':
+                            case 'Y':
+                                keepAsking = false;
+                                break;
+                            case 'n':
+                            case 'N':
+                                keepInputing = false;
+                                keepAsking = false;
+                                break;
+                            default:
+                                printEncrypted("Opcion invalida, intente nuevamente.", encrypted);
+                                break;
+                        }
+                    }
+                }
+
+                keepAsking = true;
+                while (keepAsking) {
+                    printEncrypted("Desea ingresar una mision nueva? (Y/N) ", encrypted);
+                    scanf(" %c", &question);
+                    switch (question) {
+                        case 'y':
+                        case 'Y':
+                            keepInputing = true;
+                            keepAsking = false;
+                            break;
+                        case 'n':
+                        case 'N':
+                            keepInputing = false;
+                            keepAsking = false;
+                            break;
+                        default:
+                            printEncrypted("Opcion invalida, intente nuevamente.\n", encrypted);
+                            break;
+                    }
+                }
+                
+                while (keepInputing) {
+                    printEncrypted("Ingrese la mision: ", encrypted);
+                    scanf(" %s", temp);
+                    while(!validateMission(temp)) {
+                        printEncrypted("Mision invalida, intente nuevamente (Formato: 3 caracteres y 9 digitos): ", encrypted);
+                        scanf(" %s", temp);
+                    }
+
+                    insertMission(agent, temp);
+                    printEncrypted("Mision agregada correctamente, ", encrypted);
+
+                    keepAsking = true;
+                    while (keepAsking) {
+                        printEncrypted(" desea agregar otra mision? (Y/N) ", encrypted);
+                        scanf(" %c", &question);
+                        switch (question) {
+                            case 'y':
+                            case 'Y':
+                                keepAsking = false;
+                                break;
+                            case 'n':
+                            case 'N':
+                                keepInputing = false;
+                                keepAsking = false;
+                                break;
+                            default:
+                                printEncrypted("Opcion invalida, intente nuevamente.", encrypted);
+                                break;
+                        }
+                    }
+                }
+
+                printEncrypted("El agente se edito exitosamente.\n", encrypted);
+                exit = true;
+        case 3:
+          printEncrypted("Regresando al menú principal", encrypted);
+          exit = true;
+
+        default:
+            printEncrypted("Opcion invalida, intente nuevamente. ", encrypted);
+            break;
+        }
+    }
+    
+    
+}
+
+int main() {
+  bool exit = false, keepInputing, keepAsking,  encrypt = true;
+	int option, id;
+	char question, temp[30];
+	struct Agent *agent;
+	agents.head = NULL;
+
+    printEncrypted("Bienvenido al sistema, agente.\n", encrypt);
+
+    while(!exit) {
+		printEncrypted("\n\nSelecciona una opcion:\n", encrypt);
+		printEncrypted("1. Registrar a un agente nuevo.\n", encrypt);
+		printEncrypted("2. Desaparecer a un agente.\n", encrypt);
+		printEncrypted("3. Revelar las identidades de los agentes.\n", encrypt);
+		printEncrypted("4. Revelar la identidad de un agente.\n", encrypt);
+		printEncrypted("5. Salir del sistema.\n\n", encrypt);
+		
+		scanf(" %s", temp);
+        //Llave para desencriptar
+        if(strcmp("Dencrypt", temp) == 0) {
+            encrypt = false;
+            printEncrypted("Clave correcta. Bienvenido Agente\n", encrypt);
         } else {
-            printf("No encontrado \n");
+            option = atoi(temp);
+
+            switch (option)
+            {
+            case 1:
+                agent = (struct Agent*)malloc(sizeof(struct Agent));
+                agent->actives.head = NULL;
+                agent->actives.tail = NULL;
+                agent->missions.head = NULL;
+                agent->missions.tail = NULL;
+
+                printEncrypted("\nIngrese el nombre del agente: ", encrypt);
+                scanf(" %s", agent->name);
+                
+                printEncrypted("Ingrese el apellido del agente: ", encrypt);
+                scanf(" %s", agent->lastName);
+                
+                printEncrypted("Ingrese la edad del agente: ", encrypt);
+                scanf(" %s", temp);
+                agent->age = atoi(temp);
+
+                // Validate age
+                while(agent->age <= 0) {
+                    printEncrypted("Edad invalida, ingrese de nuevo: ", encrypt);
+                    scanf(" %s", temp);
+                    agent->age = atoi(temp);
+                }
+
+                keepAsking = true;
+                while (keepAsking) {
+                    printEncrypted("Desea ingresar un activo? (Y/N) ", encrypt);
+                    scanf(" %c", &question);
+                    switch (question) {
+                        case 'y':
+                        case 'Y':
+                            keepInputing = true;
+                            keepAsking = false;
+                            break;
+                        case 'n':
+                        case 'N':
+                            keepInputing = false;
+                            keepAsking = false;
+                            break;
+                        default:
+                            printEncrypted("Opcion invalida, intente nuevamente.\n", encrypt);
+                            break;
+                    }
+                }
+                
+                while (keepInputing) {
+                    printEncrypted("Ingrese el activo: ", encrypt);
+                    scanf(" %s", temp);
+                    while(!validateActive(temp)) {
+                        printEncrypted("Activo invalido, intente nuevamente (Formato: 4 caracteres y 9 digitos): ", encrypt);
+                        scanf(" %s", temp);
+                    }
+
+                    insertActive(agent, temp);
+                    printEncrypted("Activo agregado correctamente, ", encrypt);
+
+                    keepAsking = true;
+                    while (keepAsking) {
+                        printEncrypted(" desea agregar otro activo? (Y/N) ", encrypt);
+                        scanf(" %c", &question);
+                        switch (question) {
+                            case 'y':
+                            case 'Y':
+                                keepAsking = false;
+                                break;
+                            case 'n':
+                            case 'N':
+                                keepInputing = false;
+                                keepAsking = false;
+                                break;
+                            default:
+                                printEncrypted("Opcion invalida, intente nuevamente.", encrypt);
+                                break;
+                        }
+                    }
+                }
+
+                keepAsking = true;
+                while (keepAsking) {
+                    printEncrypted("Desea ingresar una mision? (Y/N) ", encrypt);
+                    scanf(" %c", &question);
+                    switch (question) {
+                        case 'y':
+                        case 'Y':
+                            keepInputing = true;
+                            keepAsking = false;
+                            break;
+                        case 'n':
+                        case 'N':
+                            keepInputing = false;
+                            keepAsking = false;
+                            break;
+                        default:
+                            printEncrypted("Opcion invalida, intente nuevamente.\n", encrypt);
+                            break;
+                    }
+                }
+                
+                while (keepInputing) {
+                    printEncrypted("Ingrese la mision: ", encrypt);
+                    scanf(" %s", temp);
+                    while(!validateMission(temp)) {
+                        printEncrypted("Mision invalida, intente nuevamente (Formato: 3 caracteres y 9 digitos): ", encrypt);
+                        scanf(" %s", temp);
+                    }
+
+                    insertMission(agent, temp);
+                    printEncrypted("Mision agregada correctamente, ", encrypt);
+
+                    keepAsking = true;
+                    while (keepAsking) {
+                        printEncrypted(" desea agregar otra mision? (Y/N) ", encrypt);
+                        scanf(" %c", &question);
+                        switch (question) {
+                            case 'y':
+                            case 'Y':
+                                keepAsking = false;
+                                break;
+                            case 'n':
+                            case 'N':
+                                keepInputing = false;
+                                keepAsking = false;
+                                break;
+                            default:
+                                printEncrypted("Opcion invalida, intente nuevamente.", encrypt);
+                                break;
+                        }
+                    }
+                }
+
+                agent->ID = currentID++;
+                insertAgent(*agent);
+                printEncrypted("\nAgente agregado exitosamente.\n", encrypt);
+
+                break;
+            case 2:
+                keepAsking = true;
+                while (keepAsking) {
+                    printEncrypted("Ingresa el ID del agente a desaparecer (-1 para cancelar): ", encrypt);
+                    scanf("%d", &id);
+                    if(id == -1){
+                        keepAsking = false;
+                        keepInputing = false;
+                    }
+                    else {
+                        keepAsking = false;
+                        keepInputing = true;
+                    }
+                }
+                
+                if(keepInputing) {
+                    bool deleted = deleteAgentByID(id);
+                    if(deleted) {
+                        printEncrypted("\nEl agente nunca existio.\n", encrypt);
+                    }
+                    else {
+                        printEncrypted("\nNo se encontro el agente.\n", encrypt);
+                    }
+                } else {
+                    printEncrypted("\nCancelando opcion.\n", encrypt);
+                }
+
+                break;
+            case 3:
+                printAgents(encrypt);
+                break;
+            case 4:
+                printEncrypted("Ingresa el apellido o un activo del agente a buscar: ", encrypt);
+                scanf(" %s", temp);
+                findAgent(temp, encrypt);
+                break;
+            case 5:
+                printEncrypted("Saliendo del sistema, adios agente.", encrypt);
+                exit = true;
+                break;
+            default:
+                printEncrypted("Opcion invalida, intente de nuevo agente.\n", encrypt);
+                break;
+            }
         }
-        temp = temp->next; 
     }
-
-}
-
-int misionesVal(char mision[12]){
-    int i = 0;
-    for(; i < 3; i++){
-        if(!isdigit(mision[i]))
-            return 0;
-    }
-    for(; i < 12; i++){
-        if(!isalpha(mision[i]))
-            return 0;
-    }
-    return 1;
-}
-
-int activosVal(char agente[13]){
-    int i = 0;
-    for(; i < 4; i++){
-        if(!isdigit(agente[i]))
-            return 0;
-    }
-    for(; i < 13; i++){
-        if(!isalpha(agente[i]))
-            return 0;
-    }
-    return 1;
-}
-
-void insert(struct Agente A){
-    struct Node *t, *temp;
-
-    counter++;
-    t = (struct Node*)malloc(sizeof(struct Node));
-
-    if(head == NULL){
-        head = t;
-        head->data = counter;
-        head->next = NULL;
-        head->A = A;
-        return;
-    }
-
-    temp = head;
-
-    while(temp->next != NULL){
-        temp = temp->next;
-    }
-
-    temp->next = t;
-    t->data = counter;
-    t->A = A;
-    t->next = NULL; 
-}
-
-void traverse(){
-    struct Node *t;
-
-    t = head;
-
-    if(t == NULL){
-        printf("La Lista esta vacia \n");
-        return;
-    }
-
-    printf("La lista tiene %d Agentes \n \n", counter);
-
-    while(t->next != NULL){
-        printf("ID del Agente: %d \n", t->data);
-        printf("\t Nombre del Agente: %s \n" , t->A.cName);
-        printf("\t Apellido del Agente: %s\n" , t->A.cLastName);
-        printf("\t Edad del Agente: %d\n" , t->A.iAge);
-        for(int i = 0; i < counterActivos; i++){
-            printf("\t Activos del Agente: %s\n" , t->A.cActivos[i]);
-            printf("\n");
-        }
-        for(int i = 0; i < counterMisiones; i++){
-            printf("\t Misiones del Agente: %s\n" , t->A.cMission[i]);
-            printf("\n");
-        }
-        t = t->next;
-        printf("\n-------------------------------------------\n");
-    }
-
-    printf("ID del Agente: %d \n", t->data);
-    printf("\t Nombre del Agente: %s \n" , t->A.cName);
-    printf("\t Apellido del Agente: %s\n" , t->A.cLastName);
-    printf("\t Edad del Agente: %d\n" , t->A.iAge);
-    for(int i = 0; i < counterActivos; i++){
-            printf("\t Activos del Agente: %s\n" , t->A.cActivos[i]);
-            printf("\n");
-    }
-    for(int i = 0; i < counterMisiones; i++){
-            printf("\t Misiones del Agente: %s\n" , t->A.cMission[i]);
-            printf("\n");
-    }
-    printf("\n-------------------------------------------\n");
-
-}
-
-void delete(int x){
-    struct Node *prev, *temp;
-    temp = head;
-    prev = head;
-
-    if(temp != NULL && temp->data == x){
-        head = temp->next;
-        free(temp);
-        return;
-    }
-
-    while(temp != NULL && temp->data != x){
-        prev = temp; 
-        temp = temp->next; 
-    }
-    if (temp == NULL) return;
-
-    prev->next = temp->next; 
-    free(temp);
-}
-
-void encripted(int donde){
-    if(donde == 1){
-        printf("\n-------------------------------------------\n");
-        printf("1. Lpwurgxflu xp pxhyr Djhpwh.\n \n");
-        printf("2. Losulolu ñrv djhpwhv.\n \n");
-        printf("3. Eruudu xp djhpwh.\n \n");
-        printf("4. Exvfdu xp djhpwh sru dshññlgr.\n \n");
-        printf("5. Exvfdu xp djhpwh sru dfwlyr.\n \n");
-    }
-
-    else if(donde == 2){
-        //pues nada pasa 
-
-    }
+	return 0;
 }
